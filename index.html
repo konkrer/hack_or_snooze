@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Hack or Snooze</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/static//favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon_io//favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon_io//favicon-16x16.png">
+  <link rel="manifest" href="/static/favicon_io/site.webmanifest">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <script src="https://kit.fontawesome.com/5c45c2d894.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <nav>
+    <b><a class="nav-link navbar-brand" href="#" id="nav-all">Hack or Snooze</a></b>
+    <span class="hidden nav-when-logged-in ml-3" id="">
+      |
+      <a class="nav-link" id="nav-add-story" href="#" >
+        submit
+      </a>
+      |
+      <a class="nav-link" id="nav-favorites" href="#" >
+        favorites
+      </a> 
+      |
+      <a class="nav-link" id="nav-my-stories" href="#" >
+        my stories
+      </a> 
+    </span> 
+    <span class="nav-right hidden nav-when-logged-in">
+      <a class="nav-links" id="nav-user-profile" href="#">
+      </a>
+      <a class="nav-links" id="nav-logout" href="#">
+        <small>(logout)</small>
+      </a>
+    </span>   
+    <a class="nav-right nav-links" href="#" id="nav-login">
+      <small>login/create user</small>
+    </a>  
+  </nav>
+  <section class="articles-container container">
+    <form action="" class="hidden" id="submit-form">
+      <div>
+        <label for="author">author</label>
+        <input id="author" required type="text" placeholder="author name">
+      </div>
+      <div>
+        <label for="title">title</label>
+        <input id="title" required type="text" placeholder="article title">
+      </div>
+      <div>
+        <label for="url">url</label>
+        <input id="url" required type="url" placeholder="article url">
+      </div>
+      <button type="submit">submit</button>
+      <hr>
+    </form>
+    <form action="#" id="edit-article-form" class="hidden" method="post">
+      <h4>Article Information</h4>
+      <div class="edit-input">
+        <label for="edit-title">Title</label>
+        <input id="edit-title" type="text">
+        <button type="reset" id="close-edit-form">close</button>
+        <button type="submit">change</button>
+        <input type="hidden" name="storyId" id="edit-form-storyId">
+      </div>
+    </form>
+    <article>
+      <ol id="all-articles-list" class="articles-list">
+        <h3>Loading...</h3>
+      </ol>
+    </article>
+    <article>
+      <ul id="favorited-articles" class="hidden articles-list">
+      </ul>
+    </article>
+    <article>
+      <ul id="filtered-articles" class="hidden articles-list">
+      </ul>
+    </article>
+    <article>
+      <ul id="my-articles" class="hidden articles-list">
+      </ul>
+    </article>
+  </section>
+  <section class="account-forms-container container">
+    <form action="#" id="login-form" class="account-form hidden" method="post">
+      <h4>Login</h4>
+      <div class="login-input">
+        <label for="login-username">username</label>
+        <input id="login-username" type="text" autocomplete="username">
+      </div>
+      <div class="login-input">
+        <label for="login-password">password</label>
+        <input id="login-password" type="password" autocomplete="current-password">
+      </div>
+      <button type="submit">login</button>
+      <hr>
+    </form>
+    <form action="#" id="create-account-form" class="account-form hidden" method="post">
+      <h4>Create Account</h4>
+      <div class="login-input">
+        <label for="create-account-name">name</label>
+        <input id="create-account-name" type="text">
+      </div>
+      <div class="login-input">
+        <label for="create-account-username">username</label>
+        <input id="create-account-username" type="text" autocomplete="username">
+      </div>
+      <div class="login-input">
+        <label for="create-account-password">password</label>
+        <input id="create-account-password" type="password" autocomplete="current-password">
+      </div>
+      <button type="submit">create account</button>
+    </form>
+  </section>
+  <section id="user-profile" class="hidden">
+    <div class="container user-profile-inner">
+    <h4>User Profile Info</h4>
+      <section>
+        <div id="profile-name">Name:</div>
+        <div id="profile-username">Username:</div>
+        <div id="profile-account-date">Account Created:</div>
+      </section>
+    </div>
+  </section>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios/dist/axios.js"></script>
+<script src="api-classes.js"></script>
+<script src="ui.js"></script>
+
+</html>
