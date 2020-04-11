@@ -120,6 +120,10 @@ $(async function() {
 
 	$('.articles-container').on('click', '.article-favorite', async function(evt) {
 		evt.preventDefault();
+		if (currentUser === null) {
+			showLoginSignup();
+			return null;
+		}
 		// get story ID for story to favorite
 		const storyId = $(this).parent().attr('id');
 
@@ -235,7 +239,12 @@ $(async function() {
    * Show/hide the Login and Create Account Forms/ Stories
    */
 
-	$navLogin.on('click', function() {
+	$navLogin.on('click', function(evt) {
+		evt.preventDefault();
+		showLoginSignup();
+	});
+
+	function showLoginSignup() {
 		// When hiding forms and showing stories delay showing stories.
 		if ($allStoriesList.attr('style') === 'display: none;') {
 			$loginForm.slideToggle();
@@ -246,7 +255,7 @@ $(async function() {
 		$loginForm.slideToggle();
 		$createAccountForm.slideToggle();
 		toggleAllStories();
-	});
+	}
 
 	/**
    * Function to toggle the allStoriesList.
