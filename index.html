@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Hack or Snooze</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="./static//favicon_io/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./static/favicon_io/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="./static/favicon_io//favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./static/favicon_io//favicon-16x16.png">
   <link rel="manifest" href="./static/favicon_io/site.webmanifest">
@@ -61,15 +61,18 @@
       <button type="submit">submit</button>
       <hr>
     </form>
-    <form action="#" id="edit-article-form" class="hidden" method="post">
+    <form action="#" class="hidden" id="edit-article-form">
       <h4>Article Information</h4>
-      <div class="edit-input">
-        <label for="edit-title">Title</label>
-        <input id="edit-title" type="text">
-        <button type="reset" id="close-edit-form">close</button>
-        <button type="submit">change</button>
+        <div>
+          <label for="edit-title">Title</label>
+          <input id="edit-title" type="text">
+        </div>
+        <div>
+          <button type="reset" id="close-edit-form">close</button>
+          <button type="submit">change</button>
+        </div> 
         <input type="hidden" name="storyId" id="edit-form-storyId">
-      </div>
+        <hr>
     </form>
     <article>
       <ol id="all-articles-list" class="articles-list">

@@ -95,7 +95,7 @@ form input:focus {
 	box-shadow: 0 0 4px 1px darkgray;
 }
 
-form > button {
+form button {
 	width: 4rem;
 	margin: 5px 0px 15px 65px;
 	border: none;
@@ -106,6 +106,10 @@ form > button {
 	color: white;
 	cursor: pointer;
 	transition: all 0.15s;
+}
+
+form button:nth-child(2) {
+	margin: 5px 0px 15px 5px;
 }
 
 form > button:hover {

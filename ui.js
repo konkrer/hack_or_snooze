@@ -81,7 +81,8 @@ $(async function() {
 
 	$navAddStory.on('click', function(evt) {
 		evt.preventDefault();
-		$submitForm.slideToggle();
+		$submitForm.slideDown();
+		$editForm.slideUp();
 	});
 
 	/**
@@ -153,6 +154,7 @@ $(async function() {
 		const editStory = storyList.stories.filter(story => story.storyId === storyId)[0];
 		// enter pervious title value
 		$('#edit-title').val(editStory.title);
+		$submitForm.slideUp();
 		$editForm.slideDown();
 	});
 
