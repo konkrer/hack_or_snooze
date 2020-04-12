@@ -86,6 +86,16 @@ $(async function() {
 	});
 
 	/**
+   *  Event listener for hiding submit story form.
+   */
+
+	$('#close-sumbit-form').on('click', function(evt) {
+		evt.preventDefault();
+		console.log('poo');
+		$submitForm.slideUp();
+	});
+
+	/**
    *  Event listener for submitting new story.
    *  If successfully we append story to DOM.
    */
