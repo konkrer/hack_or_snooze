@@ -33,6 +33,9 @@ $(async function() {
 		const username = $('#login-username').val();
 		const password = $('#login-password').val();
 
+		if (!username || !password) return;
+		console.log(username, password, '<000');
+
 		// call the login static method to build a user instance
 		try {
 			var userInstance = await User.login(username, password);
