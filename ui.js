@@ -113,7 +113,7 @@ $(async function() {
 
 		// call the addStory method, which calls the API and then creates a new story
 		try {
-			var newStory = await storyList.addStory(currentUser.loginToken, { author, title, url });
+			var newStory = await storyList.addStory(currentUser, { author, title, url });
 		} catch (error) {
 			console.error(`Bad create story request. - ${error.message}`);
 			alert("That didn't work:/ Try again!");
@@ -125,6 +125,7 @@ $(async function() {
 		// reset and change to all stories view
 		$('#submit-form').trigger('reset');
 		hideElements();
+		addStoriesToDOM();
 		toggleAllStories();
 	});
 
@@ -164,7 +165,7 @@ $(async function() {
 		// set story edit form hidden value to storyId
 		$('#edit-form-storyId').val(storyId);
 		// get story obj
-		const editStory = storyList.stories.filter(story => story.storyId === storyId)[0];
+		const editStory = storyList.stories.find(story => story.storyId === storyId);
 		// enter pervious title value
 		$('#edit-title').val(editStory.title);
 		$submitForm.slideUp();
@@ -196,7 +197,7 @@ $(async function() {
 
 		// call the editStory method, which calls the API to edit a story
 		try {
-			var res = await storyList.editStory(currentUser.loginToken, storyId, { title });
+			var res = await storyList.editStory(currentUser, storyId, { title });
 		} catch (error) {
 			console.error(`Bad edit story request. - ${error.message}`);
 			alert("That didn't work:/ Try again!");
@@ -401,7 +402,17 @@ $(async function() {
 
 		// loop through all of our stories and generate HTML for them
 		for (let story of storyList.stories) {
-			const result = generateStoryHTML(story);
+			let fav = false,
+				own = false;
+			// If this user favorited this story show star yellow.
+			if (currentUser && currentUser.favorites.some(fav => story.storyId === fav.storyId)) {
+				fav = true;
+			}
+			// If this user is creator of story show edit and delete buttons.
+			if (currentUser && currentUser.username === story.username) {
+				own = true;
+			}
+			const result = generateStoryHTML(story, fav, own);
 			$allStoriesList.append(result);
 		}
 	}
@@ -419,7 +430,12 @@ $(async function() {
 
 		// loop through all of our stories and generate HTML for them
 		for (let story of currentUser.favorites) {
-			const result = generateStoryHTML(story);
+			let own = false;
+			// If this user is creator of story show edit and delete buttons.
+			if (currentUser && currentUser.username === story.username) {
+				own = true;
+			}
+			const result = generateStoryHTML(story, true, own);
 			$favoriteStories.append(result);
 		}
 	}
@@ -437,27 +453,25 @@ $(async function() {
 
 		// loop through all of our stories and generate HTML for them
 		for (let story of currentUser.ownStories) {
-			const result = generateStoryHTML(story);
+			let fav = false;
+			// If this user favorited this story show star yellow.
+			if (currentUser && currentUser.favorites.some(fav => story.storyId === fav.storyId)) {
+				fav = true;
+			}
+			const result = generateStoryHTML(story, fav, true);
 			$ownStories.append(result);
 		}
 	}
 
 	/**
-   * A function to render HTML for an individual Story instance
+   * A function to create html for a story.
    */
 
-	function generateStoryHTML(story) {
-		let hostName = getHostName(story.url),
-			yellow = '',
-			hidden = 'hidden';
-		// If this user favorited this story show star yellow.
-		if (currentUser && currentUser.favorites.some(fav => story.storyId === fav.storyId)) {
-			yellow = 'yellow-star';
-		}
-		// If this user is creator of story show edit and delete buttons.
-		if (currentUser && currentUser.username === story.username) {
-			hidden = '';
-		}
+	function generateStoryHTML(story, fav, own) {
+		const hostName = getHostName(story.url);
+		const yellow = fav ? 'yellow-star' : '';
+		const hidden = own ? '' : 'hidden';
+
 		// create jquery object from html.
 		return $(`
 	  <li id="${story.storyId}">

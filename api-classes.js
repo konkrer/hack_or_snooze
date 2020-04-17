@@ -43,10 +43,10 @@ class StoryList {
    * Returns the new story object
    */
 
-	async addStory(token, story) {
+	async addStory(user, story) {
 		// POST request.
 		const res = await axios.post(`${BASE_URL}/stories`, {
-			token,
+			token : user.loginToken,
 			story
 		});
 		// Make Story, add to storyList, and return Story. Avoid new API call.
@@ -64,17 +64,15 @@ class StoryList {
    * Returns the new story object
    */
 
-	async editStory(token, storyId, story) {
+	async editStory(user, storyId, story) {
 		// PATCH request.
 		const res = await axios.patch(`${BASE_URL}/stories/${storyId}`, {
-			token,
+			token : user.loginToken,
 			story
 		});
 		// make stories current. avoided new API call.
-		this.stories = this.stories.map(story => {
-			if (story.storyId === storyId) return new Story(res.data.story);
-			else return story;
-		});
+		let oldStoryIdx = this.stories.findIndex(story => story.storyId === storyId);
+		this.stories[oldStoryIdx] = new Story(res.data.story);
 		return res;
 	}
 
@@ -91,9 +89,8 @@ class StoryList {
 			data : { token }
 		});
 		// remove deleted story from this.stories. avoided API call.
-		this.stories = this.stories.filter(story => {
-			if (story.storyId !== storyId) return story;
-		});
+		const toDeleteIdx = this.stories.findIndex(story => story.storyId === storyId);
+		this.stories.splice(toDeleteIdx, 1);
 		return res.data.message;
 	}
 }
