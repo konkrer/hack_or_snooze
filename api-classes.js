@@ -64,11 +64,11 @@ class StoryList {
    * Returns the new story object
    */
 
-	async editStory(user, storyId, story) {
+	async editStory(user, storyId, storyData) {
 		// PATCH request.
 		const res = await axios.patch(`${BASE_URL}/stories/${storyId}`, {
 			token : user.loginToken,
-			story
+			story : storyData
 		});
 		// make stories current. avoided new API call.
 		let oldStoryIdx = this.stories.findIndex(story => story.storyId === storyId);
